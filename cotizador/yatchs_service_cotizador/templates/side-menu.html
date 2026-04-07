@@ -1,0 +1,72 @@
+{% load static %}
+
+
+<div class="d-flex align-items-center justify-content-center min-vh-100">
+
+    <div class="d-flex flex-column align-items-center gap-5">
+        <div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal" data-form="servicio">CREAR SERVICIOS</button> 
+            <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#miModal" data-form="producto">CREAR PRODUCTO</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#miModal" data-form="empresa">EMPRESAS</button>
+        </div>
+        
+        <div>
+            <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#miModal" data-form="cliente" >CREAR CLIENTES</button>
+            <button type="button" class="btn btn-primary " >BUSCAR COTIZACION</button>
+        </div>
+    </div>
+</div>
+
+<div id="form_servicio" style="display:none;">
+    <form method="post" action="{% url 'crear_servicio' %}">
+        {% csrf_token %}
+        {{ form_servicio.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+
+<div id="form_producto" style="display:none;">
+    <form method="post" action="{% url 'crear_producto' %}">
+        {% csrf_token %}
+        {{ form_producto.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+
+<div id="form_empresa" style="display:none;">
+    <form method="post" action="{% url 'crear_empresa' %}" enctype="multipart/form-data" >
+        {% csrf_token %}
+        {{ form_empresa.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+
+<div id="form_cliente" style="display:none;">
+    <form method="post" action="{% url 'crear_cliente' %}" >
+        {% csrf_token %}
+        {{ form_cliente.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+
+<!--modal-->
+<div class="modal fade" id="miModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modalTitulo">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modalContenido">
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="{% static 'modal.js' %}"></script>
+
+
