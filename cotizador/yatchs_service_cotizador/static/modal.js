@@ -39,19 +39,57 @@ modal.addEventListener('show.bs.modal', function(event){
     }
 })
 
+
+//se separo la parte en donde se colocan los valores en el formulario 
+
+
+//esuchamos el evento de click del boton de editar 
 document.addEventListener('click', function(event){
     if (event.target.closest('.btn-editar')) {
         const button = event.target.closest('.btn-editar');
+        const modalContenido = document.querySelector('#modalContenido');
         const form = modalContenido.querySelector('form');
+        const formType = button.getAttribute('data-form');
         console.log("Nombre:", button.getAttribute('data-nombre'));
 
    //mandar a mostrar los datos que se quieran editar en los inputs 
+  
+   if(formType == 'servicio'){
+        form.querySelector('#id_nombre').value = button.getAttribute('data-nombre');
+        form.querySelector('#id_precio').value = button.getAttribute('data-precio');
+        form.querySelector('#id_id').value = button.getAttribute('data-id');
+        
+   }else if (formType == 'producto'){
+    //from producto
+        form.querySelector('#id_nombre').value = button.getAttribute('data-nombre');
+        form.querySelector('#id_precio').value = button.getAttribute('data-precio');
+        form.querySelector('#id_codigo').value = button.getAttribute('data-codigo')
+        form.querySelector('#id_id').value = button.getAttribute('data-id');
+   }else if (formType == 'empresa'){
+    //form empresa
+        form.querySelector('#id_nombre').value = button.getAttribute('data-nombre');
+        form.querySelector('#id_tipo').value = button.getAttribute('data-tipo')
+        form.querySelector('#id_dueño').value = button.getAttribute('data-dueño')
+        form.querySelector('#id_direccion').value = button.getAttribute('data-direccion')
+        form.querySelector('#id_id').value = button.getAttribute('data-id');
+    
+   }else if (formType == 'cliente'){
+        //form cliente
         form.querySelector('#id_nombre').value = button.getAttribute('data-nombre');
         form.querySelector('#id_apellido').value = button.getAttribute('data-apellido');
         form.querySelector('#id_direccion').value = button.getAttribute('data-direccion');
         form.querySelector('#id_telefono').value = button.getAttribute('data-telefono');
         form.querySelector('#id_correo').value = button.getAttribute('data-correo');
-
         form.querySelector('#id_id').value = button.getAttribute('data-id');
+
+   }
+        
+    
+    
+        
+
+   
+
+        
     }
 });

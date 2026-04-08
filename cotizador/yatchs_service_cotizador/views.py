@@ -41,9 +41,13 @@ def cotizador (request):
     return render(request, "base.html", contexto)
 
 def crear_servicio(request):
-
     if request.method == 'POST':
-        form = ServicioForm(request.POST)
+        servicio_id = request.POST.get("id")
+        if servicio_id:
+            servicio = Servicio.objects.get(id=servicio_id)
+            form = ServicioForm(request.POST, instance=servicio)
+        else:
+            form = ServicioForm(request.POST)
         if form.is_valid():   
             form.save()
             return redirect('home')
@@ -51,28 +55,48 @@ def crear_servicio(request):
         form = ServicioForm()
     return render(request, "base.html", {"form_servicio": form})
 
+def eliminar_servicio(request, servicio_id):
+    servicio = Servicio.objects.get(id=servicio_id)
+    servicio.delete()
+    return redirect("home")
+
 def crear_empresa(request):
     if request.method == 'POST':
+        empresa_id = request.POST.get("id")
+        if empresa_id:
+            empresa = Empresa.objects.get(id=empresa_id)
+            form = EmpresaForm(request.POST, request.FILES, instance=empresa)
+        else:
         #request.FILES es para poder subir el logo de la empresa
-        form = EmpresaForm(request.POST, request.FILES) 
+            form = EmpresaForm(request.POST, request.FILES) 
         if form.is_valid():   
             form.save()
             return redirect('home')
-    else:
-        form = EmpresaForm()
     return render(request, "base.html", {"form_empresa": form})
+
+def eliminar_empresa(request, empresa_id):
+    empresa = Empresa.objects.get(id=empresa_id)
+    empresa.delete()
+    return redirect('home')
 
 
 def crear_producto(request):
     if request.method == 'POST':
-        form = ProductoForm(request.POST)
+        producto_id = request.POST.get("id")
+        if producto_id:
+            producto = Producto.objects.get(id=producto_id)
+            form = ProductoForm(request.POST, instance=producto)
+        else:
+            form = ProductoForm(request.POST)
         if form.is_valid():   
             form.save()
             return redirect('home')
-    else:
-        form = ProductoForm()
     return render(request, "base.html", {"form_producto": form})
 
+def eliminar_producto(request, producto_id):
+    producto = Producto.objects.get(id=producto_id)
+    producto.delete()
+    return redirect('home')
 
 
 def crear_cliente(request):
@@ -95,6 +119,8 @@ def eliminar_cliente(request, cliente_id):
     cliente = Cliente.objects.get(id=cliente_id)
     cliente.delete()
     return redirect('home')
+
+
 
 
 
