@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from .forms import ServicioForm, EmpresaForm, ClienteForm, ProductoForm
+from .models import Servicio, Empresa, Cliente, Producto
 
 
 # Create your views here.
@@ -19,15 +20,28 @@ from .forms import ServicioForm, EmpresaForm, ClienteForm, ProductoForm
 
     #pisa_status = pisa.CreatePDF(html, dest=response)
 def cotizador (request):
+    #queryset de los datos para las tablas
+
+    servicios = Servicio.objects.all()
+    productos = Producto.objects.all()
+    empresas = Empresa.objects.all()
+    clientes = Cliente.objects.all()
+
+    #formularios 
     contexto = {
         'form_servicio' : ServicioForm(),
         'form_producto' : ProductoForm(),
         'form_empresa' : EmpresaForm(),
-        'form_cliente' : ClienteForm()
+        'form_cliente' : ClienteForm(),
+        'servicios' : servicios,
+        'productos' : productos,
+        'empresas' : empresas,
+        'clientes' : clientes
     }
     return render(request, "base.html", contexto)
 
 def crear_servicio(request):
+
     if request.method == 'POST':
         form = ServicioForm(request.POST)
         if form.is_valid():   
@@ -39,7 +53,8 @@ def crear_servicio(request):
 
 def crear_empresa(request):
     if request.method == 'POST':
-        form = EmpresaForm(request.POST, request.FILES)
+        #request.FILES es para poder subir el logo de la empresa
+        form = EmpresaForm(request.POST, request.FILES) 
         if form.is_valid():   
             form.save()
             return redirect('home')
@@ -62,13 +77,24 @@ def crear_producto(request):
 
 def crear_cliente(request):
     if request.method == 'POST':
-        form = ClienteForm(request.POST)
+        cliente_id = request.POST.get("id")
+        if cliente_id:
+            cliente = Cliente.objects.get(id=cliente_id)
+            form = ClienteForm(request.POST, instance=cliente)
+        else:
+            form = ClienteForm(request.POST)
+            
         if form.is_valid():   
             form.save()
             return redirect('home')
-    else:
-        form = ClienteForm()
+    
     return render(request, "base.html", {"form_cliente": form})
+
+
+def eliminar_cliente(request, cliente_id):
+    cliente = Cliente.objects.get(id=cliente_id)
+    cliente.delete()
+    return redirect('home')
 
 
 
