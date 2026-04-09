@@ -10,5 +10,5 @@ urlpatterns = [
     path('eliminar_cliente/<int:cliente_id>', views.eliminar_cliente, name="eliminar_cliente"),
     path('eliminar_producto/<int:producto_id>', views.eliminar_producto, name="eliminar_producto"),
     path('eliminar_servicio/<int:servicio_id>', views.eliminar_servicio, name="eliminar_servicio"),
-    path('eliminar_empresa/<int:empresa_id>', views.eliminar_empresa, name="eliminar_empresa")
+    path('eliminar_empresa/<int:empresa_id>', views.eliminar_empresa, name="eliminar_empresa"),
 ]

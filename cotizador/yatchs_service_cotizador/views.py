@@ -27,6 +27,28 @@ def cotizador (request):
     empresas = Empresa.objects.all()
     clientes = Cliente.objects.all()
 
+    #diccionario para juntar tanto el servicio como los productos 
+    items = []
+
+    for p in productos:
+        items.append({
+            "id": p.id,
+            "tipo": "Producto",
+            "nombre": p.nombre,
+            "codigo": p.codigo,
+            "precio": p.precio,
+        })
+    
+    for s in servicios:
+        items.append({
+            "id": s.id,
+            "tipo": "Servicio",
+            "nombre": s.nombre,
+            "codigo": None,
+            "precio" : s.precio,
+        })
+
+
     #formularios 
     contexto = {
         'form_servicio' : ServicioForm(),
@@ -36,7 +58,8 @@ def cotizador (request):
         'servicios' : servicios,
         'productos' : productos,
         'empresas' : empresas,
-        'clientes' : clientes
+        'clientes' : clientes,
+        'items': items
     }
     return render(request, "base.html", contexto)
 
@@ -119,6 +142,8 @@ def eliminar_cliente(request, cliente_id):
     cliente = Cliente.objects.get(id=cliente_id)
     cliente.delete()
     return redirect('home')
+
+
 
 
 

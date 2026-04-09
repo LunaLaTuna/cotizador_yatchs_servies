@@ -1,9 +1,225 @@
-{% extends "base.html" %}
+{% load static %}
 
-{% block formato%}
+<div class="d-flex justify-content-between">
+    <div class="p-3">
+        <div class="pb-3">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEncabezado" data-table="empresa">Elige empresa</button>
+        </div>
+        <div class="d-flex">
+            <div class="">
+                <img id="empresa_logo" src="" alt="Logo empresa" style="max-width:100px; display:none;">
+            </div>
+            <div class="p-3">
+                <p id="empresa_nombre"></p>
+                <p id="empresa_dueño"></p>
+                <p id="empresa_direccion"></p>
+                
+            </div>
+        </div>
+       
+    </div>
 
-<p>Esto es una prueba del pdf que se deberia imprimir</p>
+    <div class="pe-3">
+        <p>Información de la cotizacion</p>
+        <p>Numero de cotización</p>
+        <p>fecha</p>
+    </div>
+    
+    
+</div>
 
-<b>Hola</b>
+<div class="ps-3">
+    <div class="pb-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEncabezado" data-table="cliente"> Eligue un cliente </button>
+    </div>
 
-{% endblock %}
+    <div class=" gap-5">
+        <div>
+            <p>Información del cliente</p>
+        </div>
+        <div class="d-flex gap-5">
+            <div class="">
+                <p id="cliente_nombre"> </p>
+                <p id="cliente_direccion"> </p>
+            </div>
+            <div class="">
+                <p id="cliente_numero"> </p>    
+                <p id="cliente_correo"> </p> 
+            </div>
+        </div>
+        
+        
+    </div>
+    
+</div>
+
+<div class="ps-3 pt-2">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEncabezado" data-table="items">Agregar producto o  servicio</button>
+</div>
+
+<div class="m-3" >
+        <table class="table" id="tabla_detalle" >
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Código</th>
+        <th scope="col">Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    </table>
+</div>
+
+
+<div class="d-flex justify-content-between">
+    <div class="ps-3">
+        <p>Quien emite </p>
+    </div>
+    <div class="pe-5">
+        <p class="m-0 ">Suma</p>
+        <p>Subtotsl</p>
+        <p>IVA</p>
+        <p>Total</p>
+    </div>
+</div>
+
+
+<!---Modal-->
+<div class="modal fade" id="modalEncabezado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content " >
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modalEncabezadoTitulo">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modalEncabezadoContenido">
+        ...
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!--Tablas-->
+
+<div id="tabla_empresa_encabezado" style="display:none;">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+            <th scope="col"></th>
+            <th scope="col">Logo</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Tipo Empresa</th>
+            <th scope="col">Dueño</th>
+            <th scope="col">Dirección</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for empresa in empresas %}
+            <tr class="fila-empresa"
+                data-id="{{ empresa.id}}"
+                data-nombre="{{ empresa.nombre}}"
+                data-tipo="{{ empresa.tipo }}"
+                data-dueño="{{ empresa.dueño }}"
+                data-direccion="{{ empresa.direccion }}"
+                data-logo="{{ empresa.logo.url }}">
+            <th scope="row" >{{ forloop.counter }}</th>
+            <td>
+                <!---mostrar el logo de la empresa-->
+                {% if empresa.logo %}
+                    <img src="{{ empresa.logo.url }}" alt="{{ empresa.nombre }}" style="max-width: 50px; height: auto;">
+                {% else %}
+                    <span>Sin logo</span>
+                {% endif %}
+            </td>
+            <td>{{ empresa.nombre }}</td>
+            <td>{{ empresa.tipo }}</td>
+            <td>{{ empresa.dueño }}</td>
+            <td>{{ empresa.direccion }}</td>
+            </tr>
+            {%  endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div id="tabla_cliente_encabezado" style="display:none;">
+    <table class="table table-hover" >
+        <thead>
+            <tr>
+            <th scope="col"></th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Direccion</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Correo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr
+                class="fila-cliente"
+                data-id="{{ cliente.id}}"
+                data-nombre="{{ cliente.nombre}}"
+                data-apellido="{{ cliente.apellido}}"
+                data-direccion="{{ cliente.direccion}}"
+                data-telefono="{{ cliente.telefono}}"
+                data-correo="{{ cliente.correo}}"
+                >
+            <th scope="row" >{{ forloop.counter }}</th>
+            <td>{{ cliente.nombre }}</td>
+            <td>{{ cliente.apellido }}</td>
+            <td>{{ cliente.direccion }}</td>
+            <td>{{ cliente.telefono }}</td>
+            <td>{{ cliente.correo }}</td>
+            </tr>
+            {%  endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<div id="tabla_items_encabezado" style="display:none;">
+    <table class="table table-hover" >
+        <thead>
+            <tr>
+            <th scope="col"></th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Código</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in items %}
+            <tr
+                class="fila-items"
+                data-id="{{ i.id}}"
+                data-nombre="{{ i.nombre}}"
+                data-codigo="{{ i.codigo|default:'N/A'}}"
+                data-tipo="{{ i.tipo }}"
+                data-precio="{{ i.precio}}"
+                >
+            <th scope="row" >{{ forloop.counter }}</th>
+            <td>{{ i.nombre }}</td>
+            <td>
+                {% if i.codigo %}
+                    {{ i.codigo }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+            <td>{{ i.tipo }}</td>
+            <td>{{ i.precio }}</td>
+            </tr>
+            {%  endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<script src="{% static 'modalEncabezado.js' %}"></script>
