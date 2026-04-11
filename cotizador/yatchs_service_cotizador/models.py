@@ -57,12 +57,11 @@ class Cotizacion(models.Model):
 
 
 class DetalleCotizacion(models.Model):
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, null=True, blank=True)
+    servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE, null=True, blank=True)
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
     cantidad = models.IntegerField()
     subtotal = models.DecimalField(max_digits=10, decimal_places=2)
-    iva = models.DecimalField(max_digits=10, decimal_places=2)
     cotizacion = models.ForeignKey(Cotizacion, on_delete=models.CASCADE)
 
 

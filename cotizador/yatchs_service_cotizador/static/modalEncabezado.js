@@ -60,8 +60,10 @@
         }
     })
 
-document.getElementById('tabla_items_encabezado').addEventListener('click', function(e){
+//encanchar el listener pero no solo al evento del modal, si no a todo el documento, porque este ya existe desde el inicio 
+document.addEventListener('click', function(e){
                 const fila = e.target.closest('.fila-items');
+                if (!fila) return;
 
                 const nombre = fila.getAttribute('data-nombre');
                 const tipo = fila.getAttribute('data-tipo');
@@ -71,16 +73,64 @@ document.getElementById('tabla_items_encabezado').addEventListener('click', func
                 const tablaDetalle = document.querySelector('#tabla_detalle tbody');
                 
                 const nuevaFila = document.createElement('tr');
-                nuevaFila.innerHTML = `
+
+                if (tipo === "Producto"){
+                    nuevaFila.innerHTML = `
                     <tr>
-                        <th></th>
+                        <td><input type="number" value="1" min="1" class="cantidad-input"></td>
                         <td>${nombre}</td>
                         <td>${tipo}</td>
                         <td>${codigo}</td>
                         <td>${precio}</td>
+                        <td class="subtotal">${precio}</td>
+                        <td> 
+                            <a href="#" class="btn-eliminar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                </svg>
+                            </a>
+                        </td>
                     </tr>
                 `
+
+                } else {
+                    nuevaFila.innerHTML = `
+                    <tr>
+                        <td><input type="number" value="1" min="1" readonly class="cantidad-input"></td>
+                        <td>${nombre}</td>
+                        <td>${tipo}</td>
+                        <td>${codigo}</td>
+                        <td>${precio}</td>
+                        <td class="subtotal">${precio}</td>
+                        <td><a href="#" class="btn-eliminar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                </svg>
+                            </a></td>
+                    </tr>
+                `
+                }
+                
                 tablaDetalle.appendChild(nuevaFila);
+
+                tablaDetalle.addEventListener('input', function(e){
+                if (e.target.classList.contains('cantidad-input')){
+                    const fila = e.target.closest('tr');
+                    const precio = parseFloat(fila.querySelector('td:nth-child(5)').textContent);
+                    const cantidad = parseInt(e.target.value);
+                    const subtotalCell = fila.querySelector('.subtotal');
+                    subtotalCell.textContent = (precio * cantidad.toFixed(2))
+                    }
+                })
+
+                tablaDetalle.addEventListener('click', function(e){
+                    if (e.target.closest('.btn-eliminar')){
+                        const fila = e.target.closest('tr');
+                        fila.remove();
+                    }
+                })
+
             });
 
-  
