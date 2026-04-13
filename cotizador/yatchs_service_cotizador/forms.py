@@ -1,5 +1,5 @@
 from django import forms
-from .models import Servicio, Producto,  Empresa, Cliente
+from .models import Servicio, Producto,  Empresa, Cliente, Agente
 
 class ServicioForm(forms.ModelForm):
     class Meta:
@@ -43,4 +43,15 @@ class ClienteForm(forms.ModelForm):
             'direccion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
             'telefono': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
             'correo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
+        }   
+
+class AgenteForm(forms.ModelForm):
+    class Meta:
+        model= Agente
+        fields = ['nombre', 'apellido', 'telefono' , 'empresa']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del Servicio'}),
+            'apellido': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
+            'telefono': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
+            'empresa': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
         }   

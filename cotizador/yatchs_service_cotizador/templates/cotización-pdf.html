@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: DejaVu Sans, sans-serif; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Cotización #{{ cotizacion.id }}</h1>
+    <p>Cliente: {{ cotizacion.cliente.nombre }}</p>
+    <p>Empresa: {{ cotizacion.empresa.nombre }}</p>
+    <p>Fecha: {{ cotizacion.fecha }}</p>
+    <p>Subtotal: {{ cotizacion.subtotal }}</p>
+    <p>IVA: {{ cotizacion.iva }}</p>
+    <p>Total: {{ cotizacion.total }}</p>
+
+    <h2>Detalles</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Cantidad</th>
+                <th>Producto/Servicio</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detalle in detalles %}
+            <tr>
+                <td>{{ detalle.cantidad }}</td>
+                <td>
+                    {% if detalle.producto %}
+                        {{ detalle.producto.nombre }}
+                    {% elif detalle.servicio %}
+                        {{ detalle.servicio.nombre }}
+                    {% endif %}
+                </td>
+                <td>{{ detalle.subtotal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

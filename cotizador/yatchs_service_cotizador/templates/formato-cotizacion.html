@@ -1,6 +1,8 @@
 {% load static %}
-
+<form method="POST" action="{% url 'guardar_cotizacion' %}">
+{% csrf_token %}
 <div class="d-flex justify-content-between">
+
     <div class="p-3">
         <div class="pb-3">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEncabezado" data-table="empresa">Elige empresa</button>
@@ -10,6 +12,7 @@
                 <img id="empresa_logo" src="" alt="Logo empresa" style="max-width:100px; display:none;">
             </div>
             <div class="p-3">
+                <input type="hidden" name="empresa_id" id="empresa_id">
                 <p id="empresa_nombre"></p>
                 <p id="empresa_dueño"></p>
                 <p id="empresa_direccion"></p>
@@ -22,7 +25,10 @@
     <div class="pe-3">
         <p>Información de la cotizacion</p>
         <p>Numero de cotización</p>
-        <p>fecha</p>
+        <input type="hidden" id="n_cotizacion" name="numero_cotizacion">
+        <p id="fecha_actual">fecha</p>
+        <p id="fecha_caducidad"></p>
+        <input type="hidden" id="fecha_input" name="fecha">
     </div>
     
     
@@ -39,6 +45,7 @@
         </div>
         <div class="d-flex gap-5">
             <div class="">
+                <input type="hidden" name="cliente_id" id="cliente_id">
                 <p id="cliente_nombre"> </p>
                 <p id="cliente_direccion"> </p>
             </div>
@@ -79,15 +86,36 @@
 <div class="d-flex justify-content-between">
     <div class="ps-3">
         <p>Quien emite </p>
+        <input type="hidden" name="agente_id" id="agente_id">
+        <p id="agente_nombre">Nombre</p>
+        <p id ="agente_apellido">Apellido</p>
+        <p id="agente_telefono">Telefono</p>
+        <p id="agente_empresa">Empresa</p>
+        <div class=" pt-2">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEncabezado" data-table="agentes">Agrega Agente</button>
+        </div>
     </div>
+
     <div class="pe-5">
         <p class="m-0 ">Suma</p>
-        <p>Subtotal</p>
-        <p>IVA</p>
-        <p>Total</p>
-    </div>
-</div>
+        <p id="subtotal-general">Subtotal</p>
+        <p id ="iva">IVA</p>
+        <p id="total">Total</p>
 
+        <input type="hidden" name="input_iva" id="input_iva">
+        <input type="hidden" name="input_subtotal_general" id="input_subtotal_general">
+        <input type="hidden" name="input_total" id="input_total">
+
+        <div class="pt-5">
+            <a href="{% url 'crear_pdf' cotizacion_id %} " class="btn btn-primary">
+                Imprimir
+            </a>
+            <button type="submit" class="btn btn-primary">Guardar</button> 
+        </div>
+    </div>
+   
+</div>
+ </form>
 
 <!---Modal-->
 <div class="modal fade" id="modalEncabezado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -217,6 +245,38 @@
             </td>
             <td>{{ i.tipo }}</td>
             <td>{{ i.precio }}</td>
+            </tr>
+            {%  endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<div id="tabla_agentes_encabezado" style="display:none;">
+    <table class="table table-hover" >
+        <thead>
+            <tr>
+            <th scope="col"></th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Empresa</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for agente in agentes %}
+            <tr  class="fila-agentes"
+                data-id="{{ agente.id}}"
+                data-nombre="{{ agente.nombre}}"
+                data-apellido="{{ agente.apellido}}"
+                data-telefono="{{ agente.telefono }}"
+                data-empresa="{{ agente.empresa}}">
+
+            <th scope="row" >{{ forloop.counter }}</th>
+            <td>{{ agente.nombre }}</td>
+            <td>{{ agente.apellido }}</td>
+            <td>{{ agente.telefono }}</td>
+            <td>{{ agente.empresa }}</td>
             </tr>
             {%  endfor %}
         </tbody>

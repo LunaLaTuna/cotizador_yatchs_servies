@@ -36,6 +36,10 @@ modal.addEventListener('show.bs.modal', function(event){
         //cargar la tabla con los datos
         modalFooter.innerHTML = document.getElementById("tabla_cliente").innerHTML;
 
+    }else if(formType == "agente"){
+        modalTitulo.textContent = "Crear Agente";
+        modalContenido.innerHTML = document.getElementById("form_agente").innerHTML;
+        modalFooter.innerHTML = document.getElementById("tabla_agente").innerHTML;
     }
 })
 
@@ -81,6 +85,23 @@ document.addEventListener('click', function(event){
         form.querySelector('#id_telefono').value = button.getAttribute('data-telefono');
         form.querySelector('#id_correo').value = button.getAttribute('data-correo');
         form.querySelector('#id_id').value = button.getAttribute('data-id');
+
+   }else if (formType == 'agente'){
+        //form agente
+        form.querySelector('#id_nombre').value = button.getAttribute('data-nombre');
+        form.querySelector('#id_apellido').value = button.getAttribute('data-apellido');
+        form.querySelector('#id_telefono').value = button.getAttribute('data-telefono');
+        
+        const empresaSelect = form.querySelector('#id_empresa'); //toma el select
+        const empresaNombre = button.getAttribute('data-empresa');// toma el valor de la tabla con el id data empresa
+
+            for (let option of empresaSelect.options) {//recore todas las opciones del del select 
+                if (option.text === empresaNombre) { // compara los textos de las opciones con las de la tabla
+                    empresaSelect.value = option.value; //se lo asigna si coinciden y los coloca en el select pero como numero no como text 
+                    break;
+                }
+}
+       
 
    }
         

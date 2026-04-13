@@ -2,23 +2,12 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-from .forms import ServicioForm, EmpresaForm, ClienteForm, ProductoForm
-from .models import Servicio, Empresa, Cliente, Producto
+from .forms import ServicioForm, EmpresaForm, ClienteForm, ProductoForm, AgenteForm
+from .models import Servicio, Empresa, Cliente, Producto, Agente, Cotizacion, DetalleCotizacion,  Cotizacion
 
 
 # Create your views here.
 
-    #template = get_template("formato-cotizacion.html")
-
-    #html = template.render()
-
-    # crea uan respuesta HTTP con el contenido del pdf y le dice al navegador que el archivo es un pdf para que lo abra 
-    #response = HttpResponse(content_type="application/pdf") 
-    
-    #le dice al navegador que es una archivo y que lo abra en una pestaña y el nombre del archivo 
-    #response['Content-disposition'] = 'inline; filename="cotizacion.pdf"'
-
-    #pisa_status = pisa.CreatePDF(html, dest=response)
 def cotizador (request):
     #queryset de los datos para las tablas
 
@@ -26,6 +15,7 @@ def cotizador (request):
     productos = Producto.objects.all()
     empresas = Empresa.objects.all()
     clientes = Cliente.objects.all()
+    agentes = Agente.objects.all()
 
     #diccionario para juntar tanto el servicio como los productos 
     items = []
@@ -55,9 +45,11 @@ def cotizador (request):
         'form_producto' : ProductoForm(),
         'form_empresa' : EmpresaForm(),
         'form_cliente' : ClienteForm(),
+        'form_agente' : AgenteForm(),
         'servicios' : servicios,
         'productos' : productos,
         'empresas' : empresas,
+        'agentes' : agentes,
         'clientes' : clientes,
         'items': items
     }
@@ -121,6 +113,24 @@ def eliminar_producto(request, producto_id):
     producto.delete()
     return redirect('home')
 
+def crear_agente(request):
+    if request.method == 'POST':
+        agente_id = request.POST.get("id")
+        if agente_id:
+            agente = Agente.objects.get(id=agente_id)
+            form = AgenteForm(request.POST, instance=agente)
+        else:
+            form = AgenteForm(request.POST)
+        if form.is_valid():   
+            form.save()
+            return redirect('home')
+    return render(request, "base.html", {"agente_form": form})
+
+def eliminar_agente(request, agente_id):
+    agente = Agente.objects.get(id=agente_id)
+    agente.delete()
+    return redirect('home')
+
 
 def crear_cliente(request):
     if request.method == 'POST':
@@ -142,6 +152,84 @@ def eliminar_cliente(request, cliente_id):
     cliente = Cliente.objects.get(id=cliente_id)
     cliente.delete()
     return redirect('home')
+
+def guardar_cotizacion(request):
+    if request.method == 'POST':
+        try:
+            # Crear la cotización
+            cliente_id = request.POST.get('cliente_id')
+            empresa_id = request.POST.get('empresa_id')
+            agente_id = request.POST.get('agente_id')
+            
+            cotizacion = Cotizacion.objects.create(
+                cliente_id=cliente_id,
+                empresa_id=empresa_id,
+                fecha=request.POST.get('fecha'),
+                subtotal=request.POST.get('input_subtotal_general'),
+                iva=request.POST.get('input_iva'),
+                total=request.POST.get('input_total'),
+                numero_cotizacion=1,
+                agente_id=agente_id
+            )
+            
+            nombres = request.POST.getlist('detalle_nombre')
+            tipos  = request.POST.getlist('detalle_tipo')
+            codigos = request.POST.getlist('detalle_codigo')
+            cantidades = request.POST.getlist('detalle_cantidad')
+            precios = request.POST.getlist('detalle_precio')
+            subtotales = request.POST.getlist('detalle_subtotal')
+
+            for i in range(len(nombres)):
+                # Determinar si es producto o servicio
+                producto = None
+                servicio = None
+                
+                if tipos[i] == "Producto":
+                    try:
+                        producto = Producto.objects.get(nombre=nombres[i], codigo=codigos[i])
+                    except Producto.DoesNotExist:
+                        pass
+                elif tipos[i] == "Servicio":
+                    try:
+                        servicio = Servicio.objects.get(nombre=nombres[i])
+                    except Servicio.DoesNotExist:
+                        pass
+                
+                # Crear el detalle de la cotización
+                DetalleCotizacion.objects.create(
+                    cotizacion=cotizacion,
+                    producto=producto,
+                    servicio=servicio,
+                    cantidad=int(cantidades[i]),
+                    subtotal=float(subtotales[i])
+                )
+            
+            return redirect('home')
+        except Exception as e:
+            print(f"Error al guardar la cotización: {str(e)}")
+            return render(request, "base.html", {"error": str(e)})
+    
+    return redirect('home')
+
+
+def crear_pdf(request, cotizacion_id):
+    cotizacion = Cotizacion.objects.get(id=cotizacion_id)
+    detalles = cotizacion.detallecotiacion_set.all()
+
+    template = get_template("cotizacion-pdf.html")
+    html = template.render({"cotizacion": cotizacion, "detalles" : detalles})
+
+    #crea uan respuesta HTTP con el contenido del pdf y le dice al navegador que el archivo es un pdf para que lo abra 
+    response = HttpResponse(content_type="application/pdf") 
+    
+    #le dice al navegador que es una archivo y que lo abra en una pestaña y el nombre del archivo 
+    response['Content-disposition'] = 'inline; filename="cotizacion.pdf"'
+
+    pisa_status = pisa.CreatePDF(html, dest=response)
+
+    if pisa_status.err:
+        return HttpResponse("Error en el pdf", status=500)
+    return response
 
 
 

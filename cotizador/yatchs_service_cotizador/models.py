@@ -51,15 +51,18 @@ class Cliente(models.Model):
 
 class Cotizacion(models.Model):
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
-    fecha = models.DateField(auto_now_add=True, null=True)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, )
+    fecha = models.DateField(auto_now_add=True, )
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2, )
+    iva = models.DecimalField(max_digits=10, decimal_places=2, )
     total = models.DecimalField(max_digits=10, decimal_places=2)
+    numero_cotizacion = models.IntegerField()
     agente = models.ForeignKey(Agente, on_delete=models.CASCADE)
 
 
 class DetalleCotizacion(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, null=True, blank=True)
     servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE, null=True, blank=True)
-    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
     cantidad = models.IntegerField()
     subtotal = models.DecimalField(max_digits=10, decimal_places=2)
     cotizacion = models.ForeignKey(Cotizacion, on_delete=models.CASCADE)
