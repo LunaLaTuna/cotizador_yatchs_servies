@@ -3,20 +3,22 @@
 
 <div class="d-flex align-items-center justify-content-center min-vh-100">
 
-    <div class="d-flex flex-column align-items-center gap-5">
-        <div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal" data-form="servicio">CREAR SERVICIOS</button> 
-            <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#miModal" data-form="producto">CREAR PRODUCTO</button>
-        </div>
-        <div>
-            <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#miModal" data-form="empresa">EMPRESAS</button>
-            <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#miModal" data-form="agente">AGENTE</button>
-        </div>
+    <div class="d-flex flex-column gap-5">
+
+            <p class="text-light text-center fw-medium fs-3">COTIZADOR</p>
+
+            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#miModal" data-form="servicio">CREAR SERVICIOS</button> 
+            <button type="button" class="btn btn-light " data-bs-toggle="modal" data-bs-target="#miModal" data-form="producto">CREAR PRODUCTOS</button>
         
-        <div>
-            <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#miModal" data-form="cliente" >CREAR CLIENTES</button>
-            <button type="button" class="btn btn-primary " >BUSCAR COTIZACION</button>
-        </div>
+        
+            <button type="button" class="btn btn-light"  data-bs-toggle="modal" data-bs-target="#miModal" data-form="empresa">CREAR EMPRESAS</button>
+            <button type="button" class="btn btn-light"  data-bs-toggle="modal" data-bs-target="#miModal" data-form="agente">CREAR AGENTES</button>
+        
+        
+        
+            <button type="button" class="btn btn-light " data-bs-toggle="modal" data-bs-target="#miModal" data-form="cliente" >CREAR CLIENTES</button>
+            <button type="button" class="btn btn-light " >BUSCAR COTIZACIÓN</button>
+
     </div>
 </div>
 
@@ -28,7 +30,7 @@
         {% csrf_token %}
         <input type="hidden" id="id_id" name="id">
         {{ form_servicio.as_p }}
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-dark">Guardar</button>
     </form>
 </div>
 
@@ -37,7 +39,7 @@
         {% csrf_token %}
         <input type="hidden" id="id_id" name="id">
         {{ form_producto.as_p }}
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-dark">Guardar</button>
     </form>
 </div>
 
@@ -46,7 +48,7 @@
         {% csrf_token %}
         <input type="hidden" id="id_id" name="id">
         {{ form_empresa.as_p }}
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-dark">Guardar</button>
     </form>
 </div>
 
@@ -56,7 +58,7 @@
         {% csrf_token %}
         <input type="hidden" id="id_id" name="id">
         {{ form_agente.as_p }}
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-dark">Guardar</button>
     </form>
 </div>
 
@@ -65,7 +67,7 @@
         {% csrf_token %}
         <input type="hidden" id="id_id" name="id" value="">
         {{ form_cliente.as_p }}
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-dark">Guardar</button>
     </form>
 </div>
 

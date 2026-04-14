@@ -4,7 +4,8 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from .forms import ServicioForm, EmpresaForm, ClienteForm, ProductoForm, AgenteForm
 from .models import Servicio, Empresa, Cliente, Producto, Agente, Cotizacion, DetalleCotizacion,  Cotizacion
-
+from django.conf import settings
+import os
 
 # Create your views here.
 
@@ -16,6 +17,7 @@ def cotizador (request):
     empresas = Empresa.objects.all()
     clientes = Cliente.objects.all()
     agentes = Agente.objects.all()
+
 
     #diccionario para juntar tanto el servicio como los productos 
     items = []
@@ -51,7 +53,7 @@ def cotizador (request):
         'empresas' : empresas,
         'agentes' : agentes,
         'clientes' : clientes,
-        'items': items
+        'items': items,
     }
     return render(request, "base.html", contexto)
 
@@ -204,20 +206,24 @@ def guardar_cotizacion(request):
                     subtotal=float(subtotales[i])
                 )
             
-            return redirect('home')
+            return redirect('crear_pdf', cotizacion_id=cotizacion.id)
         except Exception as e:
             print(f"Error al guardar la cotización: {str(e)}")
             return render(request, "base.html", {"error": str(e)})
     
-    return redirect('home')
 
+def detalle_cotizacion(request, cotizacion_id):
+    cotizacion = Cotizacion.objects.get(id=cotizacion_id)
+    return render(request, "base.html", {"cotizacion": cotizacion})
 
 def crear_pdf(request, cotizacion_id):
     cotizacion = Cotizacion.objects.get(id=cotizacion_id)
-    detalles = cotizacion.detallecotiacion_set.all()
+    detalles = cotizacion.detallecotizacion_set.all()
+    empresa = cotizacion.empresa
+    logo_path = os.path.join(settings.MEDIA_ROOT, str(empresa.logo))
 
     template = get_template("cotizacion-pdf.html")
-    html = template.render({"cotizacion": cotizacion, "detalles" : detalles})
+    html = template.render({"cotizacion": cotizacion, "detalles" : detalles, "logo_path" : logo_path})
 
     #crea uan respuesta HTTP con el contenido del pdf y le dice al navegador que el archivo es un pdf para que lo abra 
     response = HttpResponse(content_type="application/pdf") 

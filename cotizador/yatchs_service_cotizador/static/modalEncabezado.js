@@ -14,10 +14,11 @@
 
                 modalEncabezadoContenido.querySelectorAll('.fila-empresa').forEach(fila =>{
                 fila.addEventListener('click', function(){
+
                     document.getElementById('empresa_id').value = this.getAttribute('data-id');
-                    document.getElementById('empresa_nombre').textContent = this.getAttribute('data-nombre');
-                    document.getElementById('empresa_dueño').textContent = this.getAttribute('data-dueño');
-                    document.getElementById('empresa_direccion').textContent = this.getAttribute('data-direccion');
+                    document.getElementById('empresa_nombre').textContent = `Nombre: ${this.getAttribute('data-nombre')}`;
+                    document.getElementById('empresa_dueño').textContent = `Dueño: ${this.getAttribute('data-dueño')}`;
+                    document.getElementById('empresa_direccion').textContent = `Dirección: ${this.getAttribute('data-direccion')}`;
 
                     const urlLogo = this.getAttribute('data-logo');
                     console.log(urlLogo)
@@ -38,10 +39,10 @@
             modalEncabezadoContenido.querySelectorAll('.fila-cliente').forEach(fila => {
                 fila.addEventListener('click', function(){
                     document.getElementById('cliente_id').value = this.getAttribute('data-id');
-                    document.getElementById('cliente_nombre').textContent = this.getAttribute('data-nombre');
-                    document.getElementById('cliente_direccion').textContent = this.getAttribute('data-direccion');
-                    document.getElementById('cliente_correo').textContent = this.getAttribute('data-correo');
-                    document.getElementById('cliente_numero').textContent = this.getAttribute('data-telefono');
+                    document.getElementById('cliente_nombre').textContent = `Nombre: ${this.getAttribute('data-nombre')} ${this.getAttribute('data-apellido')}` ;
+                    document.getElementById('cliente_direccion').textContent = `Dirección: ${this.getAttribute('data-direccion')}` ;
+                    document.getElementById('cliente_correo').textContent = `Correo: ${this.getAttribute('data-correo')}`;
+                    document.getElementById('cliente_numero').textContent = `Teléfono: ${this.getAttribute('data-telefono')}`;
                     
                 })
             })
@@ -68,9 +69,8 @@
             modalEncabezadoContenido.querySelectorAll('.fila-agentes').forEach(fila => {
                 fila.addEventListener('click', function(){
                     document.getElementById('agente_id').value = this.getAttribute('data-id');
-                    document.getElementById('agente_nombre').textContent = `Nombre: ${this.getAttribute('data-nombre')}`
-                    document.getElementById('agente_apellido').textContent = `Apellido: ${this.getAttribute('data-apellido')}`;
-                    document.getElementById('agente_telefono').textContent = `Telefono: ${this.getAttribute('data-telefono')}`;
+                    document.getElementById('agente_nombre').textContent = `Nombre: ${this.getAttribute('data-nombre')} ${this.getAttribute('data-apellido')}`
+                    document.getElementById('agente_telefono').textContent = `Teléfono: ${this.getAttribute('data-telefono')}`;
                     document.getElementById('agente_empresa').textContent = `Empresa: ${this.getAttribute('data-empresa')}`;
                     
                 })
@@ -194,9 +194,9 @@ document.addEventListener('click', function(e){
                         document.getElementById('input_subtotal_general').value = subtotalGeneral.toFixed(2);
                         document.getElementById('input_total').value = total.toFixed(2);
 
-                        document.getElementById('subtotal-general').textContent = `SUBTOTAL: ${subtotalGeneral.toFixed(2)}`;
-                        document.getElementById('iva').textContent = `IVA${iva.toFixed(2)}`;
-                        document.getElementById('total').textContent = `TOTAL: ${total.toFixed(2)}`; 
+                        document.getElementById('subtotal-general').textContent = `Subtotal: ${subtotalGeneral.toFixed(2)}`;
+                        document.getElementById('iva').textContent = `IVA:         ${iva.toFixed(2)}`;
+                        document.getElementById('total').textContent = `Total: ${total.toFixed(2)}`; 
 
                     }
 
@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const año = hoy.getFullYear();
     const mes = String(hoy.getMonth() + 1).padStart(2, '0');
     const dia = String(hoy.getDate()).padStart(2, '0');
-    const fecha = `${año}-${mes}-${dia}`;
+    const fecha = `${dia}-${mes}-${año}`;
 
     const caducidad = new Date();
     caducidad.setMonth(caducidad.getMonth() + 1);
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const mesCad = String(caducidad.getMonth() + 1).padStart(2, '0');
     const diaCad = String(caducidad.getDate()).padStart(2, '0');
 
-    const fechaCaducidad = `${añoCad}-${mesCad}-${diaCad}`;
+    const fechaCaducidad = `${diaCad}-${mesCad}-${añoCad}`;
 
     document.getElementById('fecha_actual').textContent = `Fecha Actual: ${fecha}`;
     document.getElementById('fecha_caducidad').textContent = `Fecha Caducidad: ${fechaCaducidad}`;

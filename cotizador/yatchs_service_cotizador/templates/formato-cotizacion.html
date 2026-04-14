@@ -1,33 +1,35 @@
 {% load static %}
 <form method="POST" action="{% url 'guardar_cotizacion' %}">
 {% csrf_token %}
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between ">
 
     <div class="p-3">
+        <p class=" fs-4 fw-semibold ">Empresa</p>
         <div class="pb-3">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEncabezado" data-table="empresa">Elige empresa</button>
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalEncabezado" data-table="empresa">Elige una Empresa</button>
         </div>
+      
         <div class="d-flex">
             <div class="">
-                <img id="empresa_logo" src="" alt="Logo empresa" style="max-width:100px; display:none;">
+                <img id="empresa_logo" src="" alt="Logo empresa" style="max-width:150px; display:none;">
             </div>
             <div class="p-3">
                 <input type="hidden" name="empresa_id" id="empresa_id">
-                <p id="empresa_nombre"></p>
-                <p id="empresa_dueño"></p>
-                <p id="empresa_direccion"></p>
+                <p class="p-formato fs-5 fw-medium" id="empresa_nombre"></p>
+                <p class="p-formato  text-black-50" id="empresa_dueño"></p>
+                <p class="p-formato  text-black-50"id="empresa_direccion"></p>
                 
             </div>
         </div>
        
     </div>
 
-    <div class="pe-3">
-        <p>Información de la cotizacion</p>
-        <p>Numero de cotización</p>
+    <div class="pt-3 pe-5">
+        <p class="p-formato fs-5 fw-medium" >Información de Cotización</p>
+        <p class="p-formato text-black-50" >Número de cotización: </p>
         <input type="hidden" id="n_cotizacion" name="numero_cotizacion">
-        <p id="fecha_actual">fecha</p>
-        <p id="fecha_caducidad"></p>
+        <p class="p-formato text-black-50" id="fecha_actual"></p>
+        <p class="p-formato text-black-50" id="fecha_caducidad"></p>
         <input type="hidden" id="fecha_input" name="fecha">
     </div>
     
@@ -35,23 +37,24 @@
 </div>
 
 <div class="ps-3">
-    <div class="pb-3">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEncabezado" data-table="cliente"> Eligue un cliente </button>
-    </div>
+     
+            <p class="fs-4 fw-semibold ">Información del Cliente</p>
 
-    <div class=" gap-5">
-        <div>
-            <p>Información del cliente</p>
+        <div class="pb-3">
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalEncabezado" data-table="cliente"> Elige un Cliente </button>
         </div>
+
+    <div class="pb-3  gap-5">
+      
         <div class="d-flex gap-5">
             <div class="">
                 <input type="hidden" name="cliente_id" id="cliente_id">
-                <p id="cliente_nombre"> </p>
-                <p id="cliente_direccion"> </p>
+                <p class="p-formato text-black-50 " id="cliente_nombre"> </p>
+                <p class="p-formato text-black-50 " id="cliente_direccion"> </p>
             </div>
             <div class="">
-                <p id="cliente_numero"> </p>    
-                <p id="cliente_correo"> </p> 
+                <p class="p-formato text-black-50 " id="cliente_numero"> </p>    
+                <p class="p-formato text-black-50 "id="cliente_correo"> </p> 
             </div>
         </div>
         
@@ -60,12 +63,14 @@
     
 </div>
 
+<p class="fs-4 fw-semibold p-formato ps-3">Detalles Cotización</p>
+
 <div class="ps-3 pt-2">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEncabezado" data-table="items">Agregar producto o  servicio</button>
+    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalEncabezado" data-table="items">Agregar producto o servicio</button>
 </div>
 
-<div class="m-3" >
-        <table class="table" id="tabla_detalle" >
+<div class="m-3 " style="max-height:220px; overflow-y:auto;"> <!--se debe fijar una altura para poder colocar el fokins scroll-->
+        <table class="table table-borderless " id="tabla_detalle" >
     <thead>
         <tr>
         <th scope="col">Cantidad</th>
@@ -85,37 +90,38 @@
 
 <div class="d-flex justify-content-between">
     <div class="ps-3">
-        <p>Quien emite </p>
+        <p class="p-formato fs-5 fw-medium">Quién emite </p>
         <input type="hidden" name="agente_id" id="agente_id">
-        <p id="agente_nombre">Nombre</p>
-        <p id ="agente_apellido">Apellido</p>
-        <p id="agente_telefono">Telefono</p>
-        <p id="agente_empresa">Empresa</p>
+        <p class="p-formato text-black-50" id="agente_nombre"></p>
+        <p class="p-formato text-black-50" id="agente_telefono"></p>
+        <p class="p-formato text-black-50"id="agente_empresa"></p>
         <div class=" pt-2">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEncabezado" data-table="agentes">Agrega Agente</button>
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalEncabezado" data-table="agentes">Agrega Agente</button>
         </div>
     </div>
 
     <div class="pe-5">
-        <p class="m-0 ">Suma</p>
-        <p id="subtotal-general">Subtotal</p>
-        <p id ="iva">IVA</p>
-        <p id="total">Total</p>
+        <p class="p-formato fs-5 fw-medium" class="m-0 ">Sumatoria</p>
+        <p class="p-formato fw-medium text-end"id="subtotal-general">Subtotal</p>
+        <p class="p-formato fw-medium text-end" id ="iva">IVA</p>
+        <hr class="p-formato fw-medium ">
+        <p class="p-formato fw-medium text-end" id="total">Total</p>
 
         <input type="hidden" name="input_iva" id="input_iva">
         <input type="hidden" name="input_subtotal_general" id="input_subtotal_general">
         <input type="hidden" name="input_total" id="input_total">
 
-        <div class="pt-5">
-            <a href="{% url 'crear_pdf' cotizacion_id %} " class="btn btn-primary">
-                Imprimir
-            </a>
-            <button type="submit" class="btn btn-primary">Guardar</button> 
+        <div class="py-2 ">
+            <button type="submit" class="btn btn-dark">Guardar</button> 
         </div>
     </div>
    
 </div>
  </form>
+
+<div>
+
+</div>
 
 <!---Modal-->
 <div class="modal fade" id="modalEncabezado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -213,8 +219,8 @@
 
 
 
-<div id="tabla_items_encabezado" style="display:none;">
-    <table class="table table-hover" >
+<div id="tabla_items_encabezado" class="table-borderless" style="display:none;">
+    <table class="table table-hover " >
         <thead>
             <tr>
             <th scope="col"></th>
