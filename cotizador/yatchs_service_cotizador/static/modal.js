@@ -40,6 +40,11 @@ modal.addEventListener('show.bs.modal', function(event){
         modalTitulo.textContent = "Crear Agente";
         modalContenido.innerHTML = document.getElementById("form_agente").innerHTML;
         modalFooter.innerHTML = document.getElementById("tabla_agente").innerHTML;
+    } else if(formType == "cotizacion"){
+        modalTitulo.textContent = "Busqueda de Cotizaciones"
+        modalContenido.innerHTML = document.getElementById("form_buscar").innerHTML;
+        modalFooter.innerHTML = document.getElementById("tabla_cotizacion").innerHTML;
+        
     }
 })
 
@@ -100,17 +105,9 @@ document.addEventListener('click', function(event){
                     empresaSelect.value = option.value; //se lo asigna si coinciden y los coloca en el select pero como numero no como text 
                     break;
                 }
-}
-       
+    }
 
-   }
-        
-    
-    
-        
 
-   
-
-        
+        } 
     }
 });

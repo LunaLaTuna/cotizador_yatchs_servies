@@ -17,7 +17,8 @@
         
         
             <button type="button" class="btn btn-light " data-bs-toggle="modal" data-bs-target="#miModal" data-form="cliente" >CREAR CLIENTES</button>
-            <button type="button" class="btn btn-light " >BUSCAR COTIZACIÓN</button>
+
+            <button type="button" class="btn btn-light " data-bs-toggle="modal" data-bs-target="#miModal" data-form="cotizacion" >BUSCAR COTIZACIÓN</button>
 
     </div>
 </div>
@@ -71,6 +72,9 @@
     </form>
 </div>
 
+<div id="form_buscar" style="display:none;">
+    <input class="form-control" type="text" id="id_query" placeholder="Busqueda..">
+</div>
 
 <!--Tablas-->
 <div id="tabla_servicio" style="display:none;">
@@ -365,8 +369,28 @@
 </div>
 
 
+<div id="tabla_cotizacion" class="table-borderless" style="display:none;">
+    <table class="table table-hover" id="tabla_cotizaciones" >
+        <thead>
+            <tr>
+        
+            <th scope="col">N° de cotización</th>
+            <th scope="col">Empresa</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Agente</th>
+            <th scope="col">Subtotal</th>
+            <th scope="col">IVA</th>
+            <th scope="col">Total</th>
 
+            </tr>
+        </thead>
+        <tbody>
 
+        </tbody>
+    </table>
+    <div id="paginador"></div>
+</div>
 
 
 <!--modal-->
@@ -387,7 +411,7 @@
   </div>
 </div>
 
-
+<script src="{% static 'buscarModal.js' %}"></script>
 <script src="{% static 'modal.js' %}"></script>
 
 

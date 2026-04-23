@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-from .forms import ServicioForm, EmpresaForm, ClienteForm, ProductoForm, AgenteForm
-from .models import Servicio, Empresa, Cliente, Producto, Agente, Cotizacion, DetalleCotizacion,  Cotizacion
+from .forms import ServicioForm, EmpresaForm, ClienteForm, ProductoForm, AgenteForm, BuscarForm
+from .models import Servicio, Empresa, Cliente, Producto, Agente, Cotizacion, DetalleCotizacion
 from django.conf import settings
 import os
+from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.db.models import Q
 
 # Create your views here.
 
@@ -17,6 +20,7 @@ def cotizador (request):
     empresas = Empresa.objects.all()
     clientes = Cliente.objects.all()
     agentes = Agente.objects.all()
+    cotizaciones = Cotizacion.objects.all()
 
 
     #diccionario para juntar tanto el servicio como los productos 
@@ -48,12 +52,16 @@ def cotizador (request):
         'form_empresa' : EmpresaForm(),
         'form_cliente' : ClienteForm(),
         'form_agente' : AgenteForm(),
+        'form_buscar' :BuscarForm(),
         'servicios' : servicios,
         'productos' : productos,
         'empresas' : empresas,
         'agentes' : agentes,
         'clientes' : clientes,
         'items': items,
+        'cotizaciones' : cotizaciones,
+
+
     }
     return render(request, "base.html", contexto)
 
@@ -239,8 +247,27 @@ def crear_pdf(request, cotizacion_id):
 
 
 
+def busqueda_ajax(request):
+    q = request.GET.get("q", "")
+    page = request.GET.get("page", 1)
 
+    cotizaciones = Cotizacion.objects.filter(
+        Q(numero_cotizacion__icontains=q) | 
+        Q(cliente__nombre__icontains=q)| 
+        Q(empresa__nombre__icontains=q) | 
+        Q(agente__nombre__icontains=q) | 
+        Q(fecha__icontains=q) | 
+        Q(subtotal__icontains=q) | 
+        Q(iva__icontains=q) | 
+        Q(total__icontains=q)
+        )
+    paginator = Paginator(cotizaciones, 10)
+    page_obj = paginator.get_page(page)
 
-
-
+    data = {
+        "resultados" : [{"numero_cotizacion" : p.numero_cotizacion, "empresa" : p.empresa.nombre, "cliente" : p.cliente.nombre, "fecha": p.fecha.strftime("%Y-%m-%d"), "agente" : p.agente.nombre, "subtotal" : float(p.subtotal), "iva" : float(p.iva), "total": float(p.total)} for p in page_obj],
+        "num_paginas" : paginator.num_pages,
+        "paginas_actial": page_obj.number,
+    }
+    return JsonResponse(data)
 

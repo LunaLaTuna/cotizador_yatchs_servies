@@ -16,4 +16,5 @@ urlpatterns = [
     path('cotizacion/', views.guardar_cotizacion, name="guardar_cotizacion"),
     path('detalle_cotizacion/<int:cotizacion_id>/', views.detalle_cotizacion, name="detalle_cotizacion"),
     path('cotizacion_pdf/<int:cotizacion_id>/', views.crear_pdf, name="crear_pdf"),
+    path('busqueda_ajax/', views.busqueda_ajax, name="busqueda_ajax")
 ]

@@ -55,3 +55,6 @@ class AgenteForm(forms.ModelForm):
             'telefono': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
             'empresa': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
         }   
+
+class BuscarForm(forms.Form):
+    query = forms.CharField(label="Busqueda", max_length=100)
