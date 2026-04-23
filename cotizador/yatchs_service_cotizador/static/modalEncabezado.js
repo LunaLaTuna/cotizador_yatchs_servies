@@ -206,7 +206,9 @@ document.addEventListener('DOMContentLoaded', function(){
     const año = hoy.getFullYear();
     const mes = String(hoy.getMonth() + 1).padStart(2, '0');
     const dia = String(hoy.getDate()).padStart(2, '0');
+
     const fecha = `${dia}-${mes}-${año}`;
+    const fechaBackend = `${año}-${mes}-${dia}`;
 
     const caducidad = new Date();
     caducidad.setMonth(caducidad.getMonth() + 1);
@@ -216,11 +218,12 @@ document.addEventListener('DOMContentLoaded', function(){
     const diaCad = String(caducidad.getDate()).padStart(2, '0');
 
     const fechaCaducidad = `${diaCad}-${mesCad}-${añoCad}`;
+    const fechaCadBackend = `${añoCad}-${mesCad}-${diaCad}`;
 
     document.getElementById('fecha_actual').textContent = `Fecha Actual: ${fecha}`;
     document.getElementById('fecha_caducidad').textContent = `Fecha Caducidad: ${fechaCaducidad}`;
 
-    document.getElementById('fecha_input').value = fecha;
-    document.getElementById('n_cotizacion').value = 1;
+    document.getElementById('fecha_input').value = fechaBackend;
+    document.getElementById('fecha_caducidad_input').value = fechaCadBackend;
 
 })

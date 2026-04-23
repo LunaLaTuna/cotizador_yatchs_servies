@@ -27,31 +27,39 @@ document.addEventListener("DOMContentLoaded", function() {
                 tbody.innerHTML = "";
                 data.resultados.forEach(item => {
                     let fila = `<tr>
-                                  <td>${item.numero_cotizacion}</td>
-                                  <td>${item.empresa}</td>
-                                  <td>${item.cliente}</td>
-                                  <td>${item.fecha}</td>
-                                  <td>${item.agente}</td>
-                                  <td>${item.subtotal}</td>
-                                  <td>${item.iva}</td>
-                                  <td>${item.total}</td>
-                                </tr>`;
+                                    <td>${item.numero_cotizacion}</td>
+                                    <td>${item.empresa}</td>
+                                    <td>${item.cliente}</td>
+                                    <td>${item.fecha_creacion}</td>
+                                    <td>${item.fecha_caducidad}</td>
+                                    <td>${item.agente}</td>
+                                    <td>${item.subtotal}</td>
+                                    <td>${item.iva}</td>
+                                    <td>${item.total}</td>
+                                    <td>${item.pdf_url ? `<a href="${item.pdf_url}" target="_blank">Ver PDF</a>` : "No disponible"}</td>
+                                    </tr>`;
                     tbody.innerHTML += fila;
                 });
 
                 // paginador dinámico
                 let pagHtml = "";
                 for (let i = 1; i <= data.num_paginas; i++) {
-                    pagHtml += `<button class="btn btn-dark" onclick="pagina=${i};cargarResultados()">${i}</button>`;
+                    pagHtml += `<button class="btn btn-dark paginador" data-pagina="${i}">${i}</button>`;
                 }
                 paginador.innerHTML = pagHtml;
+
+                paginador.querySelectorAll('.paginador').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    pagina = parseInt(this.getAttribute('data-pagina'));
+                    cargarResultados();
+                });
+            });
             });
     }
 
-    // delegar evento al modal: cada vez que se escriba en el input
+    // hacer que se agarre el evento del modal que este en el input
     modal.addEventListener("keyup", function(e) {
         if (e.target && e.target.id === "id_query") {
-            console.log("Detectado input dentro del modal:", e.target.value);
             pagina = 1;
             cargarResultados();
         }
@@ -62,11 +70,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const button = event.relatedTarget;
         const formType = button.getAttribute("data-form");
 
-        console.log("Modal abierto con formType:", event.relatedTarget.getAttribute("data-form"));
-
         if (formType === "cotizacion") {
             pagina = 1;
-            console.log("entro al form")
             cargarResultados();
         }
     });

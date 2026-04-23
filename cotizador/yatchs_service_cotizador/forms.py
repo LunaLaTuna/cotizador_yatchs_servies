@@ -8,7 +8,8 @@ class ServicioForm(forms.ModelForm):
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del Servicio'}),
             'precio': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
-        }   
+        }  
+        
 
 class ProductoForm(forms.ModelForm):
     class Meta:
@@ -18,8 +19,8 @@ class ProductoForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del Producto'}),
             'codigo': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Codigo del Producto'}),
             'precio': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Precio del Producto'}),
-
-        }   
+        }  
+       
 
 class EmpresaForm(forms.ModelForm):
     class Meta: 
@@ -31,7 +32,9 @@ class EmpresaForm(forms.ModelForm):
             'dueño': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Dueño de la Empresa '}),
             'direccion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Direccion'}),
             'logo': forms.FileInput(attrs={'class': 'form-control', 'placeholder': 'Logo de la Empresa'}),
-        }   
+        }  
+        
+
 
 class ClienteForm(forms.ModelForm):
     class Meta:
@@ -44,6 +47,7 @@ class ClienteForm(forms.ModelForm):
             'telefono': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
             'correo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
         }   
+    
 
 class AgenteForm(forms.ModelForm):
     class Meta:

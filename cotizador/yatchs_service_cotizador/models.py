@@ -22,7 +22,7 @@ class Empresa(models.Model):
     tipo = models.CharField(max_length=20)
     dueño = models.CharField(max_length=20)
     direccion = models.CharField(max_length=20)
-    logo = models.ImageField(upload_to='logo/')
+    logo = models.ImageField(upload_to='logo/', blank=True, null=True)
 
     def __str__(self):
         return self.nombre
@@ -52,12 +52,28 @@ class Cliente(models.Model):
 class Cotizacion(models.Model):
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, )
-    fecha = models.DateField(auto_now_add=True, )
+    fecha_caducidad = models.DateField()
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, )
     iva = models.DecimalField(max_digits=10, decimal_places=2, )
     total = models.DecimalField(max_digits=10, decimal_places=2)
-    numero_cotizacion = models.IntegerField()
+    numero_cotizacion  = models.CharField(max_length=20, unique=True, blank=True)
     agente = models.ForeignKey(Agente, on_delete=models.CASCADE)
+    pdf_file = models.FileField(upload_to="cotizaciones_pdfs/", null=True, blank=True)
+    fecha_creacion = models.DateField()
+
+    #sobreescribo el metodo save
+    def save(self, *args, **kwargs):
+        #genera el numero si el campo esta vacio
+        if not self.numero_cotizacion:
+            #busca la ultima cotizacion
+            ultimo = Cotizacion.objects.order_by("-id").first()
+            #si no hya cotizacion empeiza en 1 si si hay toma el ultimo id y le sumas 1
+            siguiente = 1 if not ultimo else ultimo.id + 1
+            #05d significa llenar ceras hast 5 digitos
+            self.numero_cotizacion = f"COT-{siguiente:05d}"
+        #llamo al metodo original para guardar todo
+        super().save(*args, **kwargs)
+
 
 
 class DetalleCotizacion(models.Model):

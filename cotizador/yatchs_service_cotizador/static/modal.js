@@ -21,30 +21,49 @@ modal.addEventListener('show.bs.modal', function(event){
         modalTitulo.textContent = "Crear Servicio";
         modalContenido.innerHTML = document.getElementById("form_servicio").innerHTML;
         modalFooter.innerHTML = document.getElementById("tabla_servicio").innerHTML;
+        let modalDialog = document.querySelector("#miModal .modal-dialog");
+        modalDialog.classList.remove("modal-xl");
+        modalDialog.classList.add("modal-lg");
     } else if (formType == "producto") {
         modalTitulo.textContent = "Crear Producto";
         modalContenido.innerHTML = document.getElementById("form_producto").innerHTML;
         modalFooter.innerHTML = document.getElementById("tabla_producto").innerHTML;
+        let modalDialog = document.querySelector("#miModal .modal-dialog");
+        modalDialog.classList.remove("modal-xl");
+        modalDialog.classList.add("modal-lg");
     }else if(formType == "empresa"){
         modalTitulo.textContent = "Crear Empresa";
         modalContenido.innerHTML = document.getElementById("form_empresa").innerHTML
         modalFooter.innerHTML = document.getElementById("tabla_empresa").innerHTML;
+        let modalDialog = document.querySelector("#miModal .modal-dialog");
+        modalDialog.classList.remove("modal-xl");
+        modalDialog.classList.add("modal-lg");
     } else if (formType == "cliente") {
         modalTitulo.textContent = "Crear Cliente";
         //cargar el formulario
         modalContenido.innerHTML = document.getElementById("form_cliente").innerHTML;
         //cargar la tabla con los datos
         modalFooter.innerHTML = document.getElementById("tabla_cliente").innerHTML;
+        let modalDialog = document.querySelector("#miModal .modal-dialog");
+        modalDialog.classList.remove("modal-xl");
+        modalDialog.classList.add("modal-lg");
 
     }else if(formType == "agente"){
         modalTitulo.textContent = "Crear Agente";
         modalContenido.innerHTML = document.getElementById("form_agente").innerHTML;
         modalFooter.innerHTML = document.getElementById("tabla_agente").innerHTML;
+        let modalDialog = document.querySelector("#miModal .modal-dialog");
+        modalDialog.classList.remove("modal-xl");
+        modalDialog.classList.add("modal-lg");
     } else if(formType == "cotizacion"){
         modalTitulo.textContent = "Busqueda de Cotizaciones"
         modalContenido.innerHTML = document.getElementById("form_buscar").innerHTML;
         modalFooter.innerHTML = document.getElementById("tabla_cotizacion").innerHTML;
-        
+
+        //obetenemos el div que controla el tamaño, no es modal es .modal.dialog
+        let modalDialog = document.querySelector("#miModal .modal-dialog");
+        modalDialog.classList.remove("modal-lg");
+        modalDialog.classList.add("modal-xl");
     }
 })
 

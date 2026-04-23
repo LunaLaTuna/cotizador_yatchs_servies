@@ -53,9 +53,9 @@
                     <p style="padding: 0;">{{ cotizacion.empresa.direccion }}</p>
                 </td>
                 <td>
-                    <p style="text-align: right; padding: 0;">Numero de cotizacion: {{ cotizacion.id }}</p>
-                    <p style="text-align: right; padding: 0;">Fecha: {{ cotizacion.fecha }}</p>
-                    <p style="text-align: right; padding: 0;">Fecha: {{ cotizacion.fecha }}</p>
+                    <p style="text-align: right; padding: 0;">Número de cotización: {{ cotizacion.numero_cotizacion }}</p>
+                    <p style="text-align: right; padding: 0;">Fecha de emisión: {{ cotizacion.fecha_creacion|date:"d \d\e F \d\e Y"|upper }}</p>
+                    <p style="text-align: right; padding: 0;">Fecha caducidad: {{ cotizacion.fecha_caducidad|date:"d \d\e F \d\e Y"|upper }}</p>
                 </td>
             </tr>
         </tbody>
@@ -115,7 +115,7 @@
                 <td>
                     {% if detalle.producto %}
                         {{ detalle.producto.precio }}
-                    {% elif detaell.servicio%}
+                    {% elif detalle.servicio%}
                         {{ detalle.servicio.precio }}
                     {% endif %}
                 </td>
@@ -147,4 +147,6 @@
     </table>
 
 </body>
+
+
 </html>
