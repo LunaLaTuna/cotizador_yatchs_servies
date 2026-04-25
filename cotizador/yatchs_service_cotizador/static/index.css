@@ -6,3 +6,29 @@ html, body{
 .p-formato{
     margin-bottom: 0;
 }
+
+@media(max-width: 768px){
+    .datos-empresa-movil{
+        flex-direction: column;
+    }
+    div.informacion-cotizacion-movil{
+        padding: 0 !important; 
+    }
+    .sumatoria-movil{
+        padding: 5px !important; 
+    }
+    .boton-limpiar{
+        margin-right: 3px !important;
+    }
+    .butones-movil{
+        padding-bottom: 80px !important;
+        display: flex;
+       
+    }
+    .boton-agente-movil{
+        padding-bottom: 80px !important;
+    }
+    .texto-sumatoria{
+        text-align: right;
+    }
+}
