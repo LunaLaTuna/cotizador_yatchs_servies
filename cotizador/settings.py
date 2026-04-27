@@ -142,6 +142,8 @@ USE_TZ = True
 
 #esto sirve para poder cargar los archivos estaticos
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
 STATIC_ROOT =  BASE_DIR / 'staticfiles'
 
 
