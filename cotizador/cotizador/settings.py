@@ -58,7 +58,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'cotizador.urls'
+ROOT_URLCONF = 'cotizador.cotizador.urls'
 
 TEMPLATES = [
     {

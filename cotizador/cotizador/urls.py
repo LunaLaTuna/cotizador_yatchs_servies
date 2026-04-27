@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cotizador/', include('yatchs_service_cotizador.urls'))
+    path('cotizador/', include('cotizador.yatchs_service_cotizador.urls'))
 ]
 #esto es lo que permite obtener la url de las imagenes para poder hacer uso de ellas
 if settings.DEBUG:
