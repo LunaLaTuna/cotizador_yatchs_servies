@@ -96,7 +96,7 @@ DATABASES = {
 #         'PORT': '3306',                        
 #     }
 
-    'default' :  dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default' :  dj_database_url.config(default=os.getenv('MYSQL_URL'))
     
 }
 
