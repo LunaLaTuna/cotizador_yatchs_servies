@@ -1,1 +1,1 @@
-web: gunicorn cotizador.wsgi
+web: gunicorn cotizador.wsgi:application
