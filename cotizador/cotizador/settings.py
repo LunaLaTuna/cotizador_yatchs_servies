@@ -148,3 +148,5 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.INFO: 'info',
 }
+
+ALLOWED_HOSTS = ['localhost', 'cotizadoryatchsservies-production.up.railway.app']
