@@ -1,5 +1,5 @@
 from django.urls import path
-from cotizador.yatchs_service_cotizador import views
+from yatchs_service_cotizador import views
 
 urlpatterns = [
     path('', views.cotizador, name="home"),

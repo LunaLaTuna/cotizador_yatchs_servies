@@ -11,8 +11,13 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import dj_database_url
 from django.conf.locale.es import formats as es_formats
 from django.contrib.messages import constants as messages
+import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +32,7 @@ SECRET_KEY = 'django-insecure-=x#zwj27q#kx+kd74d*ssg47tr56ll9_%x8fik(_ia6i6c6b6*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -39,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cotizador.yatchs_service_cotizador',
+    'yatchs_service_cotizador',
     "crispy_forms",
     "crispy_bootstrap5",
 ]
@@ -58,7 +63,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'cotizador.cotizador.urls'
+ROOT_URLCONF = 'cotizador.urls'
 
 TEMPLATES = [
     {
@@ -82,14 +87,17 @@ WSGI_APPLICATION = 'cotizador.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-   'default': {
-        'ENGINE': 'django.db.backends.mysql',  
-        'NAME': 'bd_cotizador',        
-        'USER': 'root',               
-        'PASSWORD': '1234',           
-        'HOST': 'localhost',                  
-        'PORT': '3306',                        
-    }
+#    'default': {
+#         'ENGINE': 'django.db.backends.mysql',  
+#         'NAME': 'bd_cotizador',        
+#         'USER': 'root',               
+#         'PASSWORD': '1234',           
+#         'HOST': 'localhost',                  
+#         'PORT': '3306',                        
+#     }
+
+    'default' :  dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    
 }
 
 
@@ -149,4 +157,6 @@ MESSAGE_TAGS = {
     messages.INFO: 'info',
 }
 
-ALLOWED_HOSTS = ['localhost', 'cotizadoryatchsservies-production.up.railway.app']
+ALLOWED_HOSTS = ['*']
+
+# ALLOWED_HOSTS = ['localhost', 'cotizadoryatchsservies-production.up.railway.app']
