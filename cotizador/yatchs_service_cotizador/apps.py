@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class YatchsServiceCotizadorConfig(AppConfig):
-    name = 'yatchs_service_cotizador'
+    name = 'cotizador.yatchs_service_cotizador'
