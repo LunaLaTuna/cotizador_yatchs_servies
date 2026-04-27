@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'yatchs_service_cotizador',
+    'cotizador.yatchs_service_cotizador',
     "crispy_forms",
     "crispy_bootstrap5",
 ]
