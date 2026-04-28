@@ -161,4 +161,13 @@ MESSAGE_TAGS = {
 
 ALLOWED_HOSTS = ['*']
 
+# Usar R2 como almacenamiento por defecto
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_ENDPOINT_URL = 'https://1fb3617d540a1715fa0e7ee4e34dcec1.r2.cloudflarestorage.com'
+
+
 # ALLOWED_HOSTS = ['localhost', 'cotizadoryatchsservies-production.up.railway.app']
