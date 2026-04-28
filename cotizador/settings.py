@@ -160,7 +160,7 @@ MESSAGE_TAGS = {
 }
 
 ALLOWED_HOSTS = ['*']
-
+CSRF_TRUSTED_ORIGINS = [ 'https://cotizadoryatchsservies-production.up.railway.app']
 # Usar R2 como almacenamiento por defecto
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
