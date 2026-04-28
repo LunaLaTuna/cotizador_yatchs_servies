@@ -27,7 +27,7 @@ class EmpresaForm(forms.ModelForm):
         model= Empresa
         fields = ['nombre', 'tipo','dueño' , 'direccion', 'logo']
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del Servicio'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de la empresa'}),
             'tipo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tipo de Empresa'}),
             'dueño': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Dueño de la Empresa '}),
             'direccion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Direccion'}),
@@ -41,11 +41,11 @@ class ClienteForm(forms.ModelForm):
         model= Cliente
         fields = ['nombre', 'apellido', 'direccion' , 'telefono', 'correo']
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del Servicio'}),
-            'apellido': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
-            'direccion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
-            'telefono': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
-            'correo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del Cliente'}),
+            'apellido': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Apellido'}),
+            'direccion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Dirección'}),
+            'telefono': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono'}),
+            'correo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Correo'}),
         }   
     
 
@@ -54,10 +54,10 @@ class AgenteForm(forms.ModelForm):
         model= Agente
         fields = ['nombre', 'apellido', 'telefono' , 'empresa']
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del Servicio'}),
-            'apellido': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
-            'telefono': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
-            'empresa': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Precio del servicio'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre '}),
+            'apellido': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Apellido'}),
+            'telefono': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono'}),
+            'empresa': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Empresa'}),
         }   
 
 class BuscarForm(forms.Form):
