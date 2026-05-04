@@ -128,13 +128,15 @@ USE_TZ = True
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 #esto es para poder cargar y guardar las imagenes 
+#es una variable para poder cambiar entre las configuraciones de desarrollo y produccion 
+
 USE_ENVIRONMENT = os.environ.get("ENVIRONMENT", "development") == "production"
 
 if USE_ENVIRONMENT:
     # Usar R2 como almacenamiento por defecto
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     STATIC_URL = '/static/'
-    STATIC_ROOT = f"{os.environ.get("AWS_STORAGE_BUCKET_NAME")} /staticfiles"
+    STATIC_ROOT = f"{os.environ.get("AWS_STORAGE_BUCKET_NAME")}/staticfiles"
     DATABASES = { 'default' :  dj_database_url.config(default=os.getenv('MYSQL_URL'))}
 else:
     MEDIA_URL = '/media/'
