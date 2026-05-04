@@ -87,16 +87,16 @@ WSGI_APPLICATION = 'cotizador.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-#    'default': {
-#         'ENGINE': 'django.db.backends.mysql',  
-#         'NAME': 'bd_cotizador',        
-#         'USER': 'root',               
-#         'PASSWORD': '1234',           
-#         'HOST': 'localhost',                  
-#         'PORT': '3306',                        
-#     }
+   'default': {
+        'ENGINE': 'django.db.backends.mysql',  
+        'NAME': 'bd_cotizador',        
+        'USER': 'root',               
+        'PASSWORD': '1234',           
+        'HOST': 'localhost',                  
+        'PORT': '3306',                        
+    }
 
-    'default' :  dj_database_url.config(default=os.getenv('MYSQL_URL'))
+    # 'default' :  dj_database_url.config(default=os.getenv('MYSQL_URL'))
     
 }
 
@@ -139,18 +139,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-
-#esto sirve para poder cargar los archivos estaticos
-STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-STATIC_ROOT =  BASE_DIR / 'staticfiles'
-
-
 #esto es para poder cargar y guardar las imagenes 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+USE_ENVIRONMENT = os.environ.get("ENVIRONMENT", "development") == "production"
 
+if USE_ENVIRONMENT:
+    # Usar R2 como almacenamiento por defecto
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATIC_URL = '/static/'
+    STATIC_ROOT =  os.environ.get("AWS_STORAGE_BUCKET_NAME") / 'staticfiles'
+else:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+    STATIC_URL = '/static/'
+    STATIC_ROOT =  BASE_DIR / 'staticfiles'
+        
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
+# STATIC_URL = '/static/'
+# STATIC_ROOT =  BASE_DIR / 'staticfiles'
 
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
@@ -161,13 +169,12 @@ MESSAGE_TAGS = {
 
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [ 'https://cotizadoryatchsservies-production.up.railway.app']
-# Usar R2 como almacenamiento por defecto
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_ENDPOINT_URL = 'https://1fb3617d540a1715fa0e7ee4e34dcec1.r2.cloudflarestorage.com'
+
+# AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+# AWS_S3_ENDPOINT_URL = 'https://1fb3617d540a1715fa0e7ee4e34dcec1.r2.cloudflarestorage.com'
 
 
 # ALLOWED_HOSTS = ['localhost', 'cotizadoryatchsservies-production.up.railway.app']
