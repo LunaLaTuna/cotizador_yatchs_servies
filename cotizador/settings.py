@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'yatchs_service_cotizador',
     "crispy_forms",
     "crispy_bootstrap5",
+    "storages"
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
