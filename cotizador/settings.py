@@ -138,6 +138,13 @@ USE_ENVIRONMENT = os.environ.get("ENVIRONMENT", "development") == "production"
 if USE_ENVIRONMENT:
     # Usar R2 como almacenamiento por defecto
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    MEDIA_URL = 'https://1fb3617d540a1715fa0e7ee4e34dcec1.r2.cloudflarestorage.com/cotizador-media'
+    MEDIA_ROOT = BASE_DIR / 'media'
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_ENDPOINT_URL = 'https://1fb3617d540a1715fa0e7ee4e34dcec1.r2.cloudflarestorage.com'
+
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR / "staticfiles")
     DATABASES = { 'default' :  dj_database_url.config(default=os.getenv('MYSQL_URL'))}
