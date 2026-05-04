@@ -148,7 +148,7 @@ if USE_ENVIRONMENT:
     # Usar R2 como almacenamiento por defecto
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     STATIC_URL = '/static/'
-    STATIC_ROOT =  os.environ.get("AWS_STORAGE_BUCKET_NAME") / 'staticfiles'
+    STATIC_ROOT = f"{os.environ.get("AWS_STORAGE_BUCKET_NAME")} /staticfiles"
 else:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
