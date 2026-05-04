@@ -86,20 +86,6 @@ WSGI_APPLICATION = 'cotizador.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-   'default': {
-        'ENGINE': 'django.db.backends.mysql',  
-        'NAME': 'bd_cotizador',        
-        'USER': 'root',               
-        'PASSWORD': '1234',           
-        'HOST': 'localhost',                  
-        'PORT': '3306',                        
-    }
-
-    # 'default' :  dj_database_url.config(default=os.getenv('MYSQL_URL'))
-    
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -149,11 +135,22 @@ if USE_ENVIRONMENT:
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     STATIC_URL = '/static/'
     STATIC_ROOT = f"{os.environ.get("AWS_STORAGE_BUCKET_NAME")} /staticfiles"
+    DATABASES = { 'default' :  dj_database_url.config(default=os.getenv('MYSQL_URL'))}
 else:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
     STATIC_URL = '/static/'
     STATIC_ROOT =  BASE_DIR / 'staticfiles'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',  
+            'NAME': 'bd_cotizador',        
+            'USER': 'root',               
+            'PASSWORD': '1234',           
+            'HOST': 'localhost',                  
+            'PORT': '3306',                        
+        }
+    }
         
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = BASE_DIR / 'media'
