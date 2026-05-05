@@ -139,7 +139,7 @@ USE_ENVIRONMENT = os.environ.get("ENVIRONMENT", "development") == "production"
 if USE_ENVIRONMENT:
     # Usar R2 como almacenamiento por defecto
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    MEDIA_URL = 'https://1fb3617d540a1715fa0e7ee4e34dcec1.r2.cloudflarestorage.com/cotizador-media'
+    MEDIA_URL = 'https://pub-e12a508ebf5b4627bbe7b95f18c0a9f5.r2.dev'
     MEDIA_ROOT = BASE_DIR / 'media'
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
