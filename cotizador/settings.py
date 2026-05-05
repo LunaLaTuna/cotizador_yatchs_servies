@@ -146,6 +146,7 @@ if USE_ENVIRONMENT:
     AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
     AWS_S3_ENDPOINT_URL = 'https://1fb3617d540a1715fa0e7ee4e34dcec1.r2.cloudflarestorage.com'
 
+
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR / "staticfiles")
     DATABASES = { 'default' :  dj_database_url.config(default=os.getenv('MYSQL_URL'))}
