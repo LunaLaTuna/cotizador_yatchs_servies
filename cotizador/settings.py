@@ -144,7 +144,7 @@ if USE_ENVIRONMENT:
             "BACKEND" : "storages.backends.s3boto3.S3Boto3Storage",
             "OPTIONS" : {
                 "custom_domain" : os.getenv('AWS_S3_CUSTOM_DOMAIN'),
-                "acess_key" : os.getenv('AWS_ACCESS_KEY_ID'),
+                "access_key" : os.getenv('AWS_ACCESS_KEY_ID'),
                 "secret_key" : os.getenv('AWS_SECRET_ACCESS_KEY'),
                 "bucket_name" : os.getenv('AWS_STORAGE_BUCKET_NAME'),
                 "endpoint_url" : os.getenv('AWS_ENDPOINT_URL'),
