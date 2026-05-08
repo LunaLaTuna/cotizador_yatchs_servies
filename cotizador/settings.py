@@ -139,12 +139,12 @@ USE_ENVIRONMENT = os.environ.get("ENVIRONMENT", "development") == "production"
 if USE_ENVIRONMENT:
     # Usar R2 como almacenamiento por defecto
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    MEDIA_URL = 'https://pub-e12a508ebf5b4627bbe7b95f18c0a9f5.r2.dev'
+    AWS_S3_CUSTOM_DOMAIN =os.getenv('AWS_S3_CUSTOM_DOMAIN')
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
     AWS_S3_ENDPOINT_URL = 'https://1fb3617d540a1715fa0e7ee4e34dcec1.r2.cloudflarestorage.com'
-    AWS_S3_CUSTOM_DOMAIN =os.getenv('AWS_S3_CUSTOM_DOMAIN')
+    MEDIA_URL = f"{AWS_S3_CUSTOM_DOMAIN}/"
 
 
     STATIC_URL = '/static/'
@@ -172,6 +172,12 @@ else:
 # MEDIA_ROOT = BASE_DIR / 'media'
 # STATIC_URL = '/static/'
 # STATIC_ROOT =  BASE_DIR / 'staticfiles'
+
+AWS_S3_REGION_NAME = 'auto'  # R2 no usa regiones como AWS, 'auto' es vital
+AWS_S3_SIGNATURE_VERSION = 's3v4'  # Obligatorio para R2
+AWS_S3_FILE_OVERWRITE = False  # Evita que se borren archivos con
+
+
 
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
