@@ -143,13 +143,13 @@ if USE_ENVIRONMENT:
         "default": {
             "BACKEND" : "storages.backends.s3boto3.S3Boto3Storage",
             "OPTIONS" : {
-                "AWS_S3_CUSTOM_DOMAIN" :os.getenv('AWS_S3_CUSTOM_DOMAIN'),
-                "AWS_ACCESS_KEY_ID" : os.getenv('AWS_ACCESS_KEY_ID'),
-                "AWS_SECRET_ACCESS_KEY" : os.getenv('AWS_SECRET_ACCESS_KEY'),
-                "AWS_STORAGE_BUCKET_NAME" : os.getenv('AWS_STORAGE_BUCKET_NAME'),
-                "AWS_S3_ENDPOINT_URL" : 'https://1fb3617d540a1715fa0e7ee4e34dcec1.r2.cloudflarestorage.com',
-                "AWS_S3_REGION_NAME" : 'auto',  # R2 no usa regiones como AWS, 'auto' es vital
-                "AWS_S3_SIGNATURE_VERSION" : 's3v4',         
+                "custom_domain" : os.getenv('AWS_S3_CUSTOM_DOMAIN'),
+                "acess_key" : os.getenv('AWS_ACCESS_KEY_ID'),
+                "secret_key" : os.getenv('AWS_SECRET_ACCESS_KEY'),
+                "bucket_name" : os.getenv('AWS_STORAGE_BUCKET_NAME'),
+                "endpoint_url" : os.getenv('AWS_ENDPOINT_URL'),
+                "region_name" : 'auto',  # R2 no usa regiones como AWS, 'auto' es vital
+                "signature_version" : 's3v4',         
             },
         },
         "staticfiles" : {
