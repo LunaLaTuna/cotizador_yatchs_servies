@@ -147,7 +147,7 @@ if USE_ENVIRONMENT:
                 "access_key" : os.getenv('AWS_ACCESS_KEY_ID'),
                 "secret_key" : os.getenv('AWS_SECRET_ACCESS_KEY'),
                 "bucket_name" : os.getenv('AWS_STORAGE_BUCKET_NAME'),
-                "endpoint_url" : os.getenv('AWS_ENDPOINT_URL'),
+                "endpoint_url" : os.getenv('AWS_S3_ENDPOINT_URL'),
                 "region_name" : 'auto',  # R2 no usa regiones como AWS, 'auto' es vital
                 "signature_version" : 's3v4',         
             },
